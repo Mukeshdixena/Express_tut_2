@@ -1,11 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const Product = require('./product');
 
 const p = path.join(
     path.dirname(process.mainModule.filename),
     'data',
-    'products.json'
+    'cart.json'
 );
 
 module.exports = class Cart {
@@ -22,14 +21,16 @@ module.exports = class Cart {
                 updatedProduct = { ...existingProduct };
                 updatedProduct.qty = updatedProduct.qty + 1;
                 cart.products = [...cart.products]
-                cart.products[existingProduct] = updatedProduct;
+                cart.products[existingProductIndex] = updatedProduct;
+
+                console.log(updatedProduct);
 
             } else {
                 updatedProduct = { id: id, qty: 1 };
                 cart.products = [...cart.products, updatedProduct]
             }
-            cart.totalPrice += productPrice;
-            fs.writeFile(p, JSON.stringify(cart), err => {
+            cart.totalPrice = cart.totalPrice + +productPrice;
+            fs.writeFile(p, JSON.stringify(cart), (err) => {
                 console.log(err);
             });
         })
