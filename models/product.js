@@ -8,8 +8,9 @@ const Product = sequelize.define(
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
-      allowNull: false,
       primaryKey: true,
+      unique: true,
+      allowNull: false,
     },
     title: {
       type: Sequelize.STRING,
